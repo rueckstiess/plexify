@@ -1,7 +1,7 @@
 {
   "name": "plexify",
   "description": "tool to rename and move tv shows to plex folder structure.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "fmt": "mongodb-js-fmt",
     "check": "mongodb-js-precommit",
