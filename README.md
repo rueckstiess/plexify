@@ -29,7 +29,7 @@ There is also a test mode to simulate file renames. Use `--test` to activate.
 
 ## License
 
-Apache 2.0
+MIT
 
 [travis_img]: https://img.shields.io/travis/rueckstiess/plexify.svg
 [travis_url]: https://travis-ci.org/rueckstiess/plexify
