@@ -21,6 +21,7 @@ function plexifyFile(fileName, destRoot, test) {
       if (errMove) {
         return console.error(errMove.message);
       }
+      return console.log(`moved ${fileName} -> ${dest}`);
     });
   });
 }
