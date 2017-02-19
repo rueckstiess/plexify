@@ -5,6 +5,7 @@
 const plexify = require('../lib');
 const _ = require('lodash');
 const fs = require('fs');
+const mv = require('mv');
 const isVideo = require('is-video');
 const recursive = require('recursive-readdir');
 
@@ -16,7 +17,7 @@ function plexifyFile(fileName, destRoot, test) {
     if (test) {
       return console.log(`would move ${fileName} -> ${dest}`);
     }
-    fs.rename(fileName, dest, (errMove) => {
+    mv(fileName, dest, {mkdirp: true}, (errMove) => {
       if (errMove) {
         return console.error(errMove.message);
       }
@@ -38,16 +39,17 @@ const argv = require('yargs')
   })
   .option('d', {
     alias: 'destination',
-    type: 'array',
+    type: 'string',
     default: '.',
     describe: 'destination root directory to move the file to'
   })
   .argv;
 
 const filePath = argv._[0];
-const destRoot = _.find(argv.destination, (dest) => {
-  return fs.existsSync(dest);
-});
+const destRoot = _.isString(argv.destination) ?
+  argv.destination : _.find(argv.destination, (dest) => {
+    return fs.existsSync(dest);
+  });
 
 if (_.isUndefined(destRoot)) {
   console.error('No destination directory found. Please provide existing destination directory.');
