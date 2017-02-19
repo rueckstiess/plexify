@@ -16,6 +16,9 @@
   "bugs": {
     "url": "git://github.com/rueckstiess/plexify.git/issues"
   },
+  "bin": {
+    "plexify": "./bin/plexify.js"
+  },
   "dependencies": {
     "is-video": "^1.0.1",
     "left-pad": "^1.1.3",
