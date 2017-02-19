@@ -26,6 +26,7 @@
     "mv": "^2.1.1",
     "parse-torrent-name": "^0.5.4",
     "recursive-readdir": "^2.1.1",
+    "rimraf": "^2.6.0",
     "yargs": "^6.6.0"
   },
   "devDependencies": {

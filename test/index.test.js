@@ -7,7 +7,18 @@ describe('plexify', function() {
     const destRoot = '/Volumes/TV_Shows';
     plexify(fileName, destRoot, (err, res) => {
       assert.ifError(err);
-      assert.equal(res, '/Volumes/TV_Shows/The Staying Alive/Season 5/The Staying Alive - s05e02.avi');
+      assert.equal(res.destination, '/Volumes/TV_Shows/The Staying Alive/Season 5/The Staying Alive - s05e02.avi');
+      done();
+    });
+  });
+  it('returns all other information', function(done) {
+    const fileName = './The.Staying.Alive.S05E02.720p.HDTV.x264-KILLERS[rartv].avi';
+    const destRoot = '/Volumes/TV_Shows';
+    plexify(fileName, destRoot, (err, res) => {
+      assert.ifError(err);
+      assert.equal(res.title, 'The Staying Alive');
+      assert.equal(res.season, '5');
+      assert.equal(res.episode, '2');
       done();
     });
   });

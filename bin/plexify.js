@@ -8,20 +8,21 @@ const fs = require('fs');
 const mv = require('mv');
 const isVideo = require('is-video');
 const recursive = require('recursive-readdir');
+const rimraf = require('rimraf');
 
 function plexifyFile(fileName, destRoot, test) {
-  plexify(fileName, destRoot, (errPlex, dest) => {
+  plexify(fileName, destRoot, (errPlex, res) => {
     if (errPlex) {
       return console.error(errPlex.message);
     }
     if (test) {
-      return console.log(`would move ${fileName} -> ${dest}`);
+      return console.log(`would move ${fileName} -> ${res.destination}`);
     }
-    mv(fileName, dest, {mkdirp: true}, (errMove) => {
+    mv(fileName, res.destination, {mkdirp: true}, (errMove) => {
       if (errMove) {
         return console.error(errMove.message);
       }
-      return console.log(`moved ${fileName} -> ${dest}`);
+      return console.log(`${res.title} - Season ${res.season}, Episode ${res.episode}`);
     });
   });
 }
@@ -43,6 +44,11 @@ const argv = require('yargs')
     type: 'string',
     default: '.',
     describe: 'destination root directory to move the file to'
+  })
+  .option('delete', {
+    type: 'boolean',
+    default: false,
+    describe: 'delete directory after moving all containing files'
   })
   .argv;
 
@@ -68,6 +74,9 @@ if (fs.statSync(filePath).isDirectory()) {
     _.each(files, (file) => {
       plexifyFile(file, destRoot, argv.test);
     });
+    if (argv.delete && filePath !== '.') {
+      rimraf.sync(filePath);
+    }
   });
   return;
 }
